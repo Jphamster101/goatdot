@@ -7,6 +7,7 @@ const JUMP_VELOCITY = -300.0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
+	print("delta: %s", delta)
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -19,22 +20,29 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	
 	# ------------------------------------------------------
-	if Input.is_key_pressed(KEY_SHIFT):
-		print("Shift key pressed!")
-	print(direction)
+	#if Input.is_key_pressed(KEY_SHIFT):
+		#print("Shift key pressed!")
+		#velocity.x = direction * (SPEED * 5.0)
+	#print(velocity.x)
+	#print(direction)
 	# ------------------------------------------------------
 	
 	if direction:
-		# -------------------------------------
-		if Input.is_key_pressed(KEY_LEFT):
-			$AnimatedSprite2D.flip_h = true
+		if Input.is_key_pressed(KEY_SHIFT):
+			print("Shift key pressed!")
+			velocity.x = direction * (SPEED * 5.0)
+		#print(velocity.x)
 		else:
-			$AnimatedSprite2D.flip_h = false
-		print("with direction:", velocity.x)
-		# -------------------------------------
-		velocity.x = direction * SPEED
+			# -------------------------------------
+			if Input.is_key_pressed(KEY_LEFT):
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
+			#print("with direction:", velocity.x)
+			# -------------------------------------
+			velocity.x = direction * SPEED
 	else:
-		print("no direction:", velocity.x)
+		#print("no direction:", velocity.x)
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
